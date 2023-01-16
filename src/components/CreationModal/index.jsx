@@ -32,7 +32,7 @@ export default function CreationModal({setOpenCreationModal}) {
   });
 
   const newPokemon = () => {
-    if (data.name !== "" && data.hp !== 0 && data.weigth !== 0 && data.heigth !== 0 && data.type1 !== "" && data.abilities !== [] && data.defense !== 0 && data.attack !== 0 && data.specialDefense !== 0 && data.specialAttack !== 0 && data.speed !== 0) {
+    if (data.name !== "" && data.hp !== 0 && data.weigth !== 0 && data.heigth !== 0 && data.type1 !== "" && data.abilities.length !== 0 && data.defense !== 0 && data.attack !== 0 && data.specialDefense !== 0 && data.specialAttack !== 0 && data.speed !== 0) {
       setMyPokemons([...myPokemons, data])
       setOpenCreationModal(false)
     } else {

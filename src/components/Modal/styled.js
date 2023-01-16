@@ -7,7 +7,6 @@ export const Modal = styled.div`
   flex-direction: column;
   position: fixed;
   top: 10%;
-  /* left: 33%; */
   padding-top: 3%;
   background: linear-gradient(to right, #42e87a, #38f9d6);
   max-height: 80%;
@@ -70,11 +69,9 @@ export const ImagePokemon = styled.img`
 
 export const Form = styled.div`
   width: 100%;
-  /* height: 70%; */
   background-color: white;
   margin: 30% 0 0;
   padding: 0 0 30%;
-  /* top: 30%; */
   bottom: 0;
   position: relative; 
   border-bottom-left-radius: 10px;
@@ -164,6 +161,7 @@ export const BoxPokeball = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     left: 0;
+    bottom: 0;
   }
 ;
 `;

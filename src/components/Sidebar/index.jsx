@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "components/Button";
+import pokeball from "../../assets/images/pokeball.png";
 import iconPlus from "assets/images/plus.png";
 import * as S from "./styled";
 import { usePokemon } from "Provider/context";
@@ -13,11 +14,11 @@ export default function Sidebar({getPokemon, setIsMyPokemon, setOpenCreationModa
     <S.SideBarWrapper>
       <S.SideBarList>
           {myPokemons &&
-            myPokemons?.map((item) => {
-              return <S.SideBarItem onClick={()=> {
+            myPokemons?.map((item, index) => {
+              return <S.SideBarItem key={index} onClick={()=> {
                 getPokemon(item.id)
                 setIsMyPokemon(true)
-              }}><img src={item?.sprites?.front_shiny?item?.sprites?.front_shiny:""}/></S.SideBarItem>
+              }}><img src={item?.sprites?.front_shiny?item?.sprites?.front_shiny:pokeball}/></S.SideBarItem>
             })}
             {myPokemons.length < 6 && (<S.SideBarItem>?</S.SideBarItem>)}
       </S.SideBarList>

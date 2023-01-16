@@ -54,7 +54,7 @@ export default function Modal({
         </S.Close>
         <S.ImagePokemonBox>
           <S.ImagePokemon
-            src={pokemon?.sprites?.front_shiny && pokemon?.sprites?.front_shiny}
+            src={pokemon?.sprites?.front_shiny ? pokemon?.sprites?.front_shiny : pokeball}
           />
         </S.ImagePokemonBox>
         <S.Name>{pokemon && pokemon?.name}</S.Name>

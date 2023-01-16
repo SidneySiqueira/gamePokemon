@@ -14,8 +14,16 @@ export default function InputNumber({
   setData,
   invalidated,
 }) {
-  // const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [number, setNumber] = useState("");
+
+  useEffect(() => {
+    if (invalidated && data[name] === 0) {
+      setAlert(true);
+    } else {
+      setAlert(false);
+    }
+  }, [invalidated]);
 
   const handleIncrease = () => {
     setNumber(+number + 1);
@@ -25,17 +33,15 @@ export default function InputNumber({
     setNumber(+number - 1);
   };
 
-  // useEffect(() => {
-  //   if (number >= 0) {
-  //     setAlert(false);
-  //   } else {
-  //     setAlert(true);
-  //   }
-  // }, [number]);
-
   useEffect(() => {
     setData({ ...data, [name]: number });
   }, [number]);
+
+  useEffect(()=>{
+    if (number > 0) {
+      setAlert(false)
+    }
+  },[number])
 
   return (
     <S.InputNumberWrapper className={className}>
@@ -69,7 +75,7 @@ export default function InputNumber({
           />
         </S.InputActions>
       </S.InputContent>
-      {invalidated && (
+      {alert && (
         <S.Alert>Este campo é obrigatório</S.Alert>
       )}
     </S.InputNumberWrapper>

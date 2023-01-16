@@ -11,10 +11,17 @@ export const MapWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    overflow: hidden;
+    background-size: 1300px 100%;
+    background-position: center;
+  }
 `;
 
 export const Ash = styled.img`
-
+  /* @media (max-width: 768px) {
+    width: 80px;
+  } */
 `;
 
 export const AshBox = styled.div`

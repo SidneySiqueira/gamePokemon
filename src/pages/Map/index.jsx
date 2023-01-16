@@ -19,11 +19,11 @@ export default function MapPage() {
   const [openModal, setOpenModal] = useState(false);
   const [openCreationModal, setOpenCreationModal] = useState(false);
   const [id, setId] = useState();
+  const [showTooltip, setShowTooltip] = useState(false);
   const [loading, setLoading] = useState();
   const { myPokemons, setMyPokemons } = usePokemon();
   const [isMyPokemon, setIsMyPokemon] = useState(false);
 
-  console.log("id", id);
 
   const res = myPokemons;
   const goPokeball = (dado) => {
@@ -95,12 +95,10 @@ const randomNumber = () => {
       }
     } else {
       const newCaptured = myPokemons.filter((item) => item.id !== removed.id);
-      console.log("newCaptured", newCaptured);
       return setMyPokemons(newCaptured), setOpenModal(false);
     }
     localStorage.setItem("pokemon", JSON.stringify(myPokemons));
   };
-
 
   var timer=
   useEffect(() => {
@@ -168,7 +166,7 @@ const randomNumber = () => {
         </S.AshBox>
         {loading? <S.IconTooltip src={searchingTooltip} />:
         <S.TooltipBox>
-          <S.IconTooltip src={myPokemons.length < 6 ? searchTooltip:tooltipError} />
+          <S.IconTooltip src={myPokemons.length < 6 ? searchTooltip : tooltipError} />
         </S.TooltipBox>}
       </S.TooltipCard>
       {openModal && (
