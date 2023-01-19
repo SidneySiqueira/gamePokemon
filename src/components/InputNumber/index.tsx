@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
-
-import chevron from "assets/images/chevronDownBlack.png";
-
+import chevron from "../../assets/images/chevronDownBlack.png";
+import { Data } from "../../types/pokemon";
 import * as S from "./styled";
+
+
+interface InputNumber{
+  className?: string,
+  label: string,
+  placeholder: string,
+  name: string,
+  suffix?: string,
+  data: Data,
+  setData: React.Dispatch<React.SetStateAction<Data>>,
+  invalidated: boolean,
+}
 
 export default function InputNumber({
   className,
@@ -13,9 +24,9 @@ export default function InputNumber({
   data,
   setData,
   invalidated,
-}) {
+}: InputNumber) {
   const [alert, setAlert] = useState(false);
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState<string | number>("");
 
   useEffect(() => {
     if (invalidated && data[name] === 0) {
@@ -53,7 +64,7 @@ export default function InputNumber({
           type="number"
           placeholder={placeholder}
           name={name}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             setNumber(e.currentTarget.value);
           }}
         />

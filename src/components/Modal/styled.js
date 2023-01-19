@@ -83,12 +83,59 @@ export const Form = styled.div`
   justify-content: center;
 `;
 
+export const NameBox = styled.div`
+margin: 30px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const IconEdit = styled.img`
+  margin: 20px;
+  cursor: pointer;
+`;
+
 export const Name = styled.p`
-  margin: 30px 10px 0;
   font-size: 22px;
   font-family: sans-serif;
   text-align: center;
   text-transform: uppercase;
+`;
+
+export const IconCheck = styled.div`
+  width: 40px;
+  height: 40px;
+  margin: 30px 0 30px 30px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 3px 19px 5px #00000066;
+`;
+export const IconClose = styled.div`
+  width: 40px;
+  margin: 30px 10px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0px 3px 19px 0 #00000066;
+`;
+
+export const IconImg = styled.img`
+  max-width: 35px;
+`;
+
+export const InputEdit = styled.input`
+  width: 40%;
+  height: 45px;
+  font-size: 22px;
+  border-radius: 10px;
+  font-family: sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0px 3px 19px 5px #00000066;
 `;
 
 export const FeaturesBox = styled.div`
@@ -136,6 +183,8 @@ export const BadgeTypes = styled.p`
   border-radius: 20px;
   color: white;
   text-transform: uppercase;
+  display: flex;
+  align-items:center;
 `;
 
 export const Habilities = styled.div`
@@ -186,4 +235,51 @@ export const LevelsP = styled.p`
   font-family: sans-serif;
   font-size: 16px;
   text-transform: capitalize;
+`;
+
+export const InputFeature = styled.input`
+  width: 45px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding:5px;
+`;
+
+export const InputAbilities = styled.input`
+  width: 90%;
+  height: 30px;
+  text-align:center;
+  border: 1px solid gray;
+  border-radius: 10px;
+`;
+
+export const Select = styled.select`
+  width: 100%;
+  font-weight: 400;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  padding: 5px 0;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  flex-direction: column;
+  appearance: none;
+  color: white;
+
+  &:focus,
+  &:active {
+    border-color: #598bff;
+  }
+`;
+export const DropdownOption = styled.option`
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2.4rem;
+  color: #c5cef4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

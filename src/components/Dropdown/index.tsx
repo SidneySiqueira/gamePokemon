@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
-import chevron from "assets/images/chevronDownBlack.png";
+import chevron from "../../assets/images/chevronDownBlack.png";
+import { Data } from "../../types/pokemon";
+import { Option } from "../../utills/options";
 import * as S from "./styled";
 
-export default function DropdownPage ({ label, options, data, name, setData, invalidated }) {
+interface DropdownPage{
+  label?: string,
+  options: Array<Option>, 
+  data: Data, 
+  name: string, 
+  setData: React.Dispatch<React.SetStateAction<Data>>, 
+  invalidated: boolean
+}
+
+export default function DropdownPage ({ label, options, data, name, setData, invalidated }: DropdownPage) {
   const [alert, setAlert] = useState(false);
 
   useEffect(() => {
@@ -18,9 +29,9 @@ export default function DropdownPage ({ label, options, data, name, setData, inv
     {label && <S.Label>{label}</S.Label>}
 
     <S.DropdownContent>
-      <S.Select onChange={(e)=> {
+      <S.Select onChange={(e: React.ChangeEvent<HTMLSelectElement>)=> {        
+        setData({...data, [name]: e.target.value });
         if (e.target.value.length > 0) {
-          setData({...data, [name]: e.target.value });
           setAlert(false)
         } else {
           setAlert(true)
@@ -28,7 +39,7 @@ export default function DropdownPage ({ label, options, data, name, setData, inv
         }}>
         <S.DropdownOption value="">Selecione o(s) tipo(s)</S.DropdownOption>
         {options &&
-          options.map((option, index) => (
+          options.map((option:Option, index:number) => (
             <S.DropdownOption key={index} value={option.value} >
               {option.text}
             </S.DropdownOption>

@@ -1,21 +1,33 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styled";
 import close from "../../assets/images/close.png";
-import Button from "components/Button";
+import Button from "../Button";
 import camera from "../../assets/images/camera.png";
-import InputText from "components/InputText";
-import DropdownPage from "components/Dropdown";
-import InputNumber from "components/InputNumber";
-import { options } from "utills/options";
-import { usePokemon } from "Provider/context";
+import InputText from "../InputText";
+import DropdownPage from "../Dropdown";
+import InputNumber from "../InputNumber";
+import { options } from "../../utills/options";
+import { usePokemon } from "../../Provider/context";
+import { Data, DataAbilities, DataUnion } from "../../types/pokemon";
 
-export default function CreationModal({setOpenCreationModal}) {
-  const {myPokemons, setMyPokemons} = usePokemon()
-  const [dataAbilities, setDataAbilities] = useState({});
+interface CreationModal{
+  setOpenCreationModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function CreationModal({ setOpenCreationModal }: CreationModal) {
+  const { myPokemons, setMyPokemons } = usePokemon()
+  const [dataAbilities, setDataAbilities] = useState<DataAbilities>(
+   { 
+    abilities1: "",
+    abilities2: "",
+    abilities3: "",
+    abilities4: "",
+  }
+  );
   const [numberOfAbilities, setNumberOfAbilities] = useState(0)
   const [invalidated, setInvalidated] = useState(false)
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<Data>({
     id: 0,
     name: "",
     hp: 0,
@@ -29,10 +41,12 @@ export default function CreationModal({setOpenCreationModal}) {
     specialDefense: 0,
     specialAttack: 0,
     speed: 0,
+    sprites:{front_shiny:""},
+    stats:{base_stat:0}
   });
 
   const newPokemon = () => {
-    if (data.name !== "" && data.hp !== 0 && data.weigth !== 0 && data.heigth !== 0 && data.type1 !== "" && data.abilities.length !== 0 && data.defense !== 0 && data.attack !== 0 && data.specialDefense !== 0 && data.specialAttack !== 0 && data.speed !== 0) {
+    if (data.name !== "" && data.hp !== 0 && data.weight !== 0 && data.height !== 0 && data.type1 !== "" && data.abilities.length !== 0 && data.defense !== 0 && data.attack !== 0 && data.specialDefense !== 0 && data.specialAttack !== 0 && data.speed !== 0) {
       setMyPokemons([...myPokemons, data])
       setOpenCreationModal(false)
     } else {
@@ -51,13 +65,13 @@ export default function CreationModal({setOpenCreationModal}) {
   const abilities = Object.values(dataAbilities);
 
   useEffect(() => {
-    setData({ ...data, abilities: abilities });
+    setData({ ...data, abilities: abilities as string[]});
   }, [dataAbilities]);
-
+  
   return (
     <S.Modal>
       <S.Form>
-        <S.Close onClick={()=> setOpenCreationModal(false)}>
+        <S.Close onClick={() => setOpenCreationModal(false)}>
           <S.X src={close} />
         </S.Close>
         <S.ImagePokemonBox>
@@ -70,7 +84,7 @@ export default function CreationModal({setOpenCreationModal}) {
             name={"name"}
             data={data}
             invalidated={invalidated}
-            setData={setData}
+            setData={setData as unknown as React.Dispatch<React.SetStateAction<DataUnion>>}
           />
         </S.Box>
         <S.Box>
@@ -113,14 +127,14 @@ export default function CreationModal({setOpenCreationModal}) {
           name={"type1"}
           setData={setData}
         />
-        {data.type1 !== "" && 
-        <DropdownPage
-          options={options}
-          data={data}
-          invalidated={invalidated}
-          name={"type2"}
-          setData={setData}
-        />}
+        {data.type1 !== "" && data.type1.length > 0 &&
+          <DropdownPage
+            options={options}
+            data={data}
+            invalidated={invalidated}
+            name={"type2"}
+            setData={setData}
+          />}
         <S.Topics>habilidades</S.Topics>
         <S.Box>
           <InputText
@@ -128,43 +142,43 @@ export default function CreationModal({setOpenCreationModal}) {
             name={"abilities1"}
             data={dataAbilities}
             invalidated={invalidated}
-            setData={setDataAbilities}
+            setData={setDataAbilities as unknown as React.Dispatch<React.SetStateAction<DataUnion>>}
           />
         </S.Box>
         {numberOfAbilities >= 1 &&
           <S.Box>
-          <InputText
-            placeholder={"HABILIDADE 2"}
-            name={"abilities2"}
-            data={dataAbilities}
-            invalidated={invalidated}
-            setData={setDataAbilities}
-          />
-        </S.Box>}
+            <InputText
+              placeholder={"HABILIDADE 2"}
+              name={"abilities2"}
+              data={dataAbilities}
+              invalidated={invalidated}
+              setData={setDataAbilities as unknown as React.Dispatch<React.SetStateAction<DataUnion>>}
+            />
+          </S.Box>}
         {numberOfAbilities >= 2 &&
           <S.Box>
-          <InputText
-            placeholder={"HABILIDADE 3"}
-            name={"abilities3"}
-            data={dataAbilities}
-            invalidated={invalidated}
-            setData={setDataAbilities}
-          />
-        </S.Box>}
+            <InputText
+              placeholder={"HABILIDADE 3"}
+              name={"abilities3"}
+              data={dataAbilities}
+              invalidated={invalidated}
+              setData={setDataAbilities as unknown as React.Dispatch<React.SetStateAction<DataUnion>>}
+            />
+          </S.Box>}
         {numberOfAbilities >= 3 &&
           <S.Box>
-          <InputText
-            placeholder={"HABILIDADE 4"}
-            name={"abilities4"}
-            data={dataAbilities}
-            invalidated={invalidated}
-            setData={setDataAbilities}
-          />
-        </S.Box>}
+            <InputText
+              placeholder={"HABILIDADE 4"}
+              name={"abilities4"}
+              data={dataAbilities}
+              invalidated={invalidated}
+              setData={setDataAbilities as unknown as React.Dispatch<React.SetStateAction<DataUnion>>}
+            />
+          </S.Box>}
         <S.IconBox>
-          {numberOfAbilities > 0 &&<S.Icon onClick={handleDecrease} src="https://cdn-icons-png.flaticon.com/512/2740/2740679.png"/>}
-          {numberOfAbilities < 3 &&<S.Icon onClick={handleIncrease} src="https://cdn-icons-png.flaticon.com/512/1828/1828926.png"/>}
-          </S.IconBox>
+          {numberOfAbilities > 0 && <S.Icon onClick={handleDecrease} src="https://cdn-icons-png.flaticon.com/512/2740/2740679.png" />}
+          {numberOfAbilities < 3 && <S.Icon onClick={handleIncrease} src="https://cdn-icons-png.flaticon.com/512/1828/1828926.png" />}
+        </S.IconBox>
         <S.Topics>Estatísticas</S.Topics>
         <S.Box>
           <InputNumber
@@ -217,7 +231,7 @@ export default function CreationModal({setOpenCreationModal}) {
           />
         </S.Box>
         <S.BoxButton>
-          <Button text={"Criar Pokemon"} onClick={newPokemon}/>
+          <Button text={"Criar Pokemon"} onClick={newPokemon} />
         </S.BoxButton>
       </S.Form>
     </S.Modal>

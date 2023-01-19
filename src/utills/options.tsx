@@ -1,3 +1,8 @@
+export interface Option {
+  value: string;
+  text: string;
+}
+
 export const options = [
     {value: "normal",text: "Normal"},
     {value: "eletric",text: "Eletric"},

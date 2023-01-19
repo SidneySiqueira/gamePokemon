@@ -1,4 +1,4 @@
-export const typePower = (Background) => {
+export const typePower = (Background:string) => {
     switch (Background) {
       case "fire":
         return "#CF2C03";

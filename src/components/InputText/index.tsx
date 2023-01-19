@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
-
+import { DataUnion } from "../../types/pokemon";
 import * as S from "./styled";
+
+interface InputText{
+  className?: string,
+  label?: string,
+  type?: string,
+  placeholder?: string,
+  name: string,
+  data: DataUnion,
+  setData: React.Dispatch<React.SetStateAction<DataUnion>> ,
+  invalidated: boolean,
+}
 
 export default function InputText({
   className,
@@ -11,7 +22,7 @@ export default function InputText({
   data,
   setData,
   invalidated,
-}) {
+}: InputText) {
   const [alert, setAlert] = useState(false);
 
   useEffect(() => {
@@ -30,7 +41,7 @@ export default function InputText({
         type={type}
         placeholder={placeholder}
         name={name}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
           if (e.target.value.length >= 2 && name) {
             setAlert(false)
             setData({ ...data, [name]: e.target.value })}}  
