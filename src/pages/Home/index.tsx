@@ -1,5 +1,4 @@
 import Button from "../../components/Button";
-import React from "react";
 import pokemonLogo from "../../assets/images/pokemonLogo.png"
 
 import * as S from "./styled";

@@ -9,7 +9,11 @@ import { typesTrasnlations } from "../../utills/typesTranslation";
 import { typePower } from "../../utills/typePower";
 import { Data, PokemonType } from "../../types/pokemon";
 import { usePokemon } from "../../Provider/context";
-import { Option, options } from "../../utills/options";
+import DropdownModification from "../DropdownModification";
+import StatisticsComponent from "../StatisticsComponent";
+import Features from "../Features";
+import FeaturesHeight from "../FeaturesHeight";
+import Abilities from "../Abilities";
 
 interface Modal {
   pokemon: PokemonType,
@@ -78,9 +82,7 @@ export default function Modal({
   return (
     <S.Modal>
       <S.Form>
-        <S.Close onClick={() => {
-          setOpenModal(false);
-        }}>
+        <S.Close onClick={() => setOpenModal(false)}>
           <S.X src={close} />
         </S.Close>
         <S.ImagePokemonBox>
@@ -88,32 +90,43 @@ export default function Modal({
             src={pokemon?.sprites?.front_shiny ? pokemon?.sprites?.front_shiny : pokeball}
           />
         </S.ImagePokemonBox>
-        {!edit ? <S.NameBox><S.Name>{pokemon && pokemon?.name}</S.Name>{isEdit && <S.IconCheck onClick={() => setEdit(true)}><S.IconEdit src={editIcon} /></S.IconCheck>}</S.NameBox> :
+        {!edit ?
+          <S.NameBox>
+            <S.Name>{pokemon && pokemon?.name}</S.Name>
+            {isEdit && <S.IconCheck onClick={() => setEdit(true)}>
+              <S.IconEdit src={editIcon} /></S.IconCheck>}
+          </S.NameBox> :
           <S.NameBox>
             <S.InputEdit onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTyping(e.target.value)} />
-            <S.IconCheck onClick={() => changeName(typing)}><S.IconImg src={checkIcon} /></S.IconCheck>
-            <S.IconClose onClick={() => setEdit(false)}><S.IconImg src={close} /></S.IconClose>
+            <S.IconCheck onClick={() => changeName(typing)}>
+              <S.IconImg src={checkIcon} />
+            </S.IconCheck>
+            <S.IconClose onClick={() => setEdit(false)}>
+              <S.IconImg src={close} />
+            </S.IconClose>
           </S.NameBox>}
         <S.FeaturesBox>
-          {pokemon.id !== 0 ?
-            <S.Features>
-              hp
-              <br />
-              {`${existingPokemonHp ? existingPokemonHp : creatingPokemonHp}/${existingPokemonHp ? existingPokemonHp : creatingPokemonHp
-                }`}
-            </S.Features> : <S.Features>hp<br /><S.InputFeature placeholder={`${existingPokemonHp ? existingPokemonHp : creatingPokemonHp}`} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, hp: +e.target.value } as Data)} /></S.Features>}
-          {pokemon.id !== 0 ?
-            <S.FeaturesHeight>
-              altura
-              <br />
-              {`${pokemon && pokemon?.height} m`}
-            </S.FeaturesHeight> : <S.Features>altura<br /><S.InputFeature placeholder={`${pokemon && pokemon?.height}`} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, height: +e.target.value } as Data)} />m</S.Features>}
-          {pokemon.id !== 0 ?
-            <S.Features>
-              peso
-              <br />
-              {`${pokemon && pokemon?.weight} kg`}
-            </S.Features> : <S.Features>peso<br /><S.InputFeature placeholder={`${pokemon && pokemon?.weight} `} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, weight: +e.target.value } as Data)} />kg</S.Features>}
+          <Features
+            name={"hp"}
+            pokemon={pokemon as unknown as Data}
+            existing={existingPokemonHp as number}
+            creating={creatingPokemonHp as number}
+            customPokemon={customPokemon as unknown as Data}
+            setCustomPokemon={setCustomPokemon}
+          />
+          <FeaturesHeight
+            pokemon={pokemon as unknown as Data}
+            customPokemon={customPokemon as unknown as Data}
+            setCustomPokemon={setCustomPokemon}
+          />
+          <Features
+            name={"peso"}
+            pokemon={pokemon as unknown as Data}
+            existing={`${pokemon && pokemon?.weight}`}
+            creating={`${pokemon && pokemon?.weight}`}
+            customPokemon={customPokemon as unknown as Data}
+            setCustomPokemon={setCustomPokemon}
+          />
         </S.FeaturesBox>
         <S.Topics>tipo</S.Topics>
         {pokemon && pokemon?.id !== 0 ?
@@ -133,126 +146,81 @@ export default function Modal({
           <S.PokemonsTypes>
             <S.BadgeTypes
               style={{ backgroundColor: typePower(pokemon && pokemon?.type1) }}
-            ><S.Select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, type1: e.target.value } as Data)}>
-                <S.DropdownOption value={typesTrasnlations[pokemon && pokemon?.type1]}>{typesTrasnlations[pokemon && pokemon?.type1]}</S.DropdownOption>
-                {options &&
-                  options.map((option: Option, index: number) => (
-                    <S.DropdownOption key={index} value={option.value} >
-                      {option.text}
-                    </S.DropdownOption>
-                  ))}
-              </S.Select>
+            ><DropdownModification
+                name={"type1"}
+                pokemon={pokemon.type1}
+                customPokemon={customPokemon as unknown as Data}
+                setCustomPokemon={setCustomPokemon} />
             </S.BadgeTypes>
-            {pokemon && pokemon?.type2 && (
+            {pokemon?.type2.length > 0 && (
               <S.BadgeTypes
                 style={{
                   backgroundColor: typePower(pokemon && pokemon?.type2),
                 }}
-              ><S.Select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, type2: e.target.value } as Data)}>
-                  <S.DropdownOption value={typesTrasnlations[pokemon && pokemon?.type2]}>{typesTrasnlations[pokemon && pokemon?.type2]}</S.DropdownOption>
-                  {options &&
-                    options.map((option: Option, index: number) => (
-                      <S.DropdownOption key={index} value={option.value} >
-                        {option.text}
-                      </S.DropdownOption>
-                    ))}
-                </S.Select>
-
+              ><DropdownModification
+                  name={"type2"}
+                  pokemon={pokemon.type2}
+                  customPokemon={customPokemon as unknown as Data}
+                  setCustomPokemon={setCustomPokemon} />
               </S.BadgeTypes>
             )}
           </S.PokemonsTypes>
         }
-        {pokemon.id !== 0 ?
-          <>
-            <S.Topics>habilidades</S.Topics>
-            <S.Habilities>
-              <S.Techniques>{skillsArray.toString()}</S.Techniques>
-            </S.Habilities>
-          </> : <>
-            <S.Topics>habilidades</S.Topics>
-            <S.Habilities>
-              <S.InputAbilities placeholder={skillsArray.toString()} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, abilities: [e.target.value] } as Data)} />
-            </S.Habilities>
-          </>}
+        <Abilities
+          pokemon={pokemon as unknown as Data}
+          skillsArray={skillsArray}
+          customPokemon={customPokemon as unknown as Data}
+          setCustomPokemon={setCustomPokemon}
+        />
         {isMyPokemon && (
           <>
             <S.Topics>estatística</S.Topics>
             <S.Statistics>
-              {pokemon.id !== 0 ?
-                <S.Levels>
-                  <S.LevelsP>defesa</S.LevelsP>
-                  <S.LevelsP>
-                    {pokemon && pokemon?.id !== +0
-                      ? existingPokemonDefense
-                      : creatingPokemonDefense}
-                  </S.LevelsP>
-                </S.Levels> :
-                <S.Levels>
-                  <S.LevelsP>defesa</S.LevelsP>
-                  <S.InputFeature placeholder={pokemon && pokemon?.id !== +0
-                    ? existingPokemonDefense
-                    : creatingPokemonDefense} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, defense: +e.target.value } as Data)} />
-                </S.Levels>}
-              {pokemon.id !== 0 ?
-                <S.Levels>
-                  <S.LevelsP>ataque</S.LevelsP>
-                  <S.LevelsP>
-                    {pokemon && pokemon?.id !== +0
-                      ? existingPokemonAttack
-                      : creatingPokemonAttack}
-                  </S.LevelsP>
-                </S.Levels> :
-                <S.Levels>
-                  <S.LevelsP>ataque</S.LevelsP>
-                  <S.InputFeature placeholder={pokemon && pokemon?.id !== +0
-                    ? existingPokemonAttack
-                    : creatingPokemonAttack} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, attack: +e.target.value } as Data)} />
-                </S.Levels>}
-              {pokemon.id !== 0 ?
-                <S.Levels>
-                  <S.LevelsP>defesa especial</S.LevelsP>
-                  <S.LevelsP>
-                    {pokemon && pokemon?.id !== +0
-                      ? existingPokemonSpecialDefense
-                      : creatingPokemonSpecialDefense}
-                  </S.LevelsP>
-                </S.Levels> :
-                <S.Levels>
-                  <S.LevelsP>defesa especial</S.LevelsP>
-                  <S.InputFeature placeholder={pokemon && pokemon?.id !== +0
-                    ? existingPokemonSpecialDefense
-                    : creatingPokemonSpecialDefense} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, specialDefense: +e.target.value } as Data)} />
-                </S.Levels>}
-              {pokemon.id !== 0 ?
-                <S.Levels>
-                  <S.LevelsP>ataque especial</S.LevelsP>
-                  <S.LevelsP>
-                    {pokemon && pokemon?.id !== +0
-                      ? existingPokemonSpecialAttack
-                      : creatingPokemonSpecialAttack}
-                  </S.LevelsP>
-                </S.Levels> :
-                <S.Levels>
-                  <S.LevelsP>ataque especial</S.LevelsP>
-                  <S.InputFeature placeholder={pokemon && pokemon?.id !== +0
-                    ? existingPokemonSpecialAttack
-                    : creatingPokemonSpecialAttack} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, specialAttack: +e.target.value } as Data)} />
-                </S.Levels>}
-              {pokemon.id !== 0 ?
-                <S.Levels>
-                  <S.LevelsP>velocidade</S.LevelsP>
-                  <S.LevelsP>
-                    {pokemon && pokemon?.id !== +0
-                      ? existingPokemonSpeed
-                      : creatingPokemonSpeed}
-                  </S.LevelsP>
-                </S.Levels> :
-                <S.Levels>
-                  <S.LevelsP>velocidade</S.LevelsP>
-                  <S.InputFeature placeholder={pokemon && pokemon?.id !== +0
-                    ? existingPokemonSpeed
-                    : creatingPokemonSpeed} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCustomPokemon({ ...customPokemon, speed: +e.target.value } as Data)} />
-                </S.Levels>}
+              <StatisticsComponent
+                name={"Defesa"}
+                technique={"defense"}
+                pokemon={pokemon as unknown as Data}
+                existing={existingPokemonDefense as number}
+                creating={creatingPokemonDefense as number}
+                customPokemon={customPokemon as unknown as Data}
+                setCustomPokemon={setCustomPokemon}
+              />
+              <StatisticsComponent
+                name={"Ataque"}
+                technique={"attack"}
+                pokemon={pokemon as unknown as Data}
+                existing={existingPokemonAttack as number}
+                creating={creatingPokemonAttack as number}
+                customPokemon={customPokemon as unknown as Data}
+                setCustomPokemon={setCustomPokemon}
+              />
+              <StatisticsComponent
+                name={"Defesa Especial"}
+                technique={"specialDefense"}
+                pokemon={pokemon as unknown as Data}
+                existing={existingPokemonSpecialDefense as number}
+                creating={creatingPokemonSpecialDefense as number}
+                customPokemon={customPokemon as unknown as Data}
+                setCustomPokemon={setCustomPokemon}
+              />
+              <StatisticsComponent
+                name={"Ataque Especial"}
+                technique={"specialAttack"}
+                pokemon={pokemon as unknown as Data}
+                existing={existingPokemonSpecialAttack as number}
+                creating={creatingPokemonSpecialAttack as number}
+                customPokemon={customPokemon as unknown as Data}
+                setCustomPokemon={setCustomPokemon}
+              />
+              <StatisticsComponent
+                name={"Velocidade"}
+                technique={"speed"}
+                pokemon={pokemon as unknown as Data}
+                existing={existingPokemonSpeed as number}
+                creating={creatingPokemonSpeed as number}
+                customPokemon={customPokemon as unknown as Data}
+                setCustomPokemon={setCustomPokemon}
+              />
             </S.Statistics>
           </>
         )}

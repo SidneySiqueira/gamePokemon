@@ -145,22 +145,6 @@ export const FeaturesBox = styled.div`
   justify-content: space-around;
   text-align: center;
 `;
-export const Features = styled.div`
-  width: 33%;
-  font-family: sans-serif;
-  font-size: 14px;
-  text-align: center;
-  text-transform: uppercase;
-`;
-export const FeaturesHeight = styled.div`
-  width: 33%;
-  font-family: sans-serif;
-  font-size: 14px;
-  text-align: center;
-  text-transform: uppercase;
-  border-left: 1px solid #c5cee0;
-  border-right: 1px solid #c5cee0;
-`;
 
 export const Topics = styled.h1`
   font-family: sans-serif;
@@ -187,20 +171,6 @@ export const BadgeTypes = styled.p`
   align-items:center;
 `;
 
-export const Habilities = styled.div`
-  margin: 30px 10px;
-  display: flex;
-  justify-content: center;
-`;
-
-export const Techniques = styled.p`
-  font-family: sans-serif;
-  font-size: 16px;
-  text-align: center;
-  margin: 20px 0;
-  text-transform: capitalize;
-`;
-
 export const BoxPokeball = styled.div`
   position: fixed;
   width: 400px;
@@ -222,64 +192,4 @@ export const Pokeball = styled.img`
 
 export const Statistics = styled.ul`
   margin: 30px 30px;
-`;
-
-export const Levels = styled.li`
-  margin: 10px;
-  display: flex;
-  justify-content: space-between;
-  margin: 15px;
-`;
-
-export const LevelsP = styled.p`
-  font-family: sans-serif;
-  font-size: 16px;
-  text-transform: capitalize;
-`;
-
-export const InputFeature = styled.input`
-  width: 45px;
-  border: 1px solid gray;
-  border-radius: 10px;
-  padding:5px;
-`;
-
-export const InputAbilities = styled.input`
-  width: 90%;
-  height: 30px;
-  text-align:center;
-  border: 1px solid gray;
-  border-radius: 10px;
-`;
-
-export const Select = styled.select`
-  width: 100%;
-  font-weight: 400;
-  font-size: 1.6rem;
-  text-transform: uppercase;
-  padding: 5px 0;
-  background: none;
-  border: none;
-  border-radius: 3px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content:center;
-  flex-direction: column;
-  appearance: none;
-  color: white;
-
-  &:focus,
-  &:active {
-    border-color: #598bff;
-  }
-`;
-export const DropdownOption = styled.option`
-  font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 2.4rem;
-  color: #c5cef4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
